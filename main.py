@@ -7,25 +7,25 @@ from misc import time_getter as time, news_getter as news, weather_getter as wea
 bot = commands.Bot(command_prefix='.', intents = discord.Intents.all() , help_command = None)
 
 def member_list():
-  guild = bot.get_guild(935545006113058837)
-  users = guild.members
-  ids = []
+    guild = bot.get_guild(935545006113058837)
+    users = guild.members
+    ids = []
 
-  for user in users:
-    if user.id != 877967717087461406:
-      ids.append(user.id)
+    for user in users:
+        if user.id != 877967717087461406:
+            ids.append(user.id)
 
-  with open("users.json", "r") as f:
-    data = json.load(f)
-  data['users'] = ids
-  with open("users.json", "w") as f:
-    json.dump(data, f, indent=4)
+    with open("users.json", "r") as f:
+        data = json.load(f)
+    data['users'] = ids
+    with open("users.json", "w") as f:
+        json.dump(data, f, indent=4)
 
 @bot.event
 async def on_ready():
-  print('Logged in as ' + bot.user.name)
-  print('Ready!\n')
-  await time_notif()
+    print('Logged in as ' + bot.user.name)
+    print('Ready!\n')
+    await time_notif()
 
 async def time_notif():
   while True:
@@ -45,52 +45,52 @@ async def time_notif():
 
 
 async def embed_maker():
-  desc, temp, feel, min, max, humid, image_url = weather()
-  weather_embed = discord.Embed(title="Weather", color = 0x82d1f1)
-  weather_embed.add_field(name="Temperature", value=temp, inline=True)
-  weather_embed.add_field(name="Feels Like", value=feel, inline=True)
-  weather_embed.add_field(name="Humidity", value=humid, inline=True)
+    desc, temp, feel, min, max, humid, image_url = weather()
+    weather_embed = discord.Embed(title="Weather", color = 0x82d1f1)
+    weather_embed.add_field(name="Temperature", value=temp, inline=True)
+    weather_embed.add_field(name="Feels Like", value=feel, inline=True)
+    weather_embed.add_field(name="Humidity", value=humid, inline=True)
 
-  weather_embed.add_field(name="Description", value=desc, inline=True)
-  weather_embed.add_field(name="Minimum", value=min, inline=True)
-  weather_embed.add_field(name="Maximum", value=max, inline=True)
+    weather_embed.add_field(name="Description", value=desc, inline=True)
+    weather_embed.add_field(name="Minimum", value=min, inline=True)
+    weather_embed.add_field(name="Maximum", value=max, inline=True)
 
-  weather_embed.set_thumbnail(url = image_url)
-  weather_embed.set_footer(text="weather")
-
-
-  title, description, url, image_url = news()
-  news_embed = discord.Embed(title="News", color = 0xd0db61)
-  news_embed.add_field(name=title, value=f"""{description}
-
-Read the article here: {url}
-""", inline=False)
-  
-  news_embed.set_thumbnail(url = image_url)
-  news_embed.set_footer(text="news")
+    weather_embed.set_thumbnail(url = image_url)
+    weather_embed.set_footer(text="weather")
 
 
-  hex = color()
-  color_embed = discord.Embed(title="Random Color", color = 0xffffff)
-  color_embed.add_field(name="Hex Code", value=f"#{hex}", inline=False)
-  
-  color_embed.set_image(url = f"https://www.colorbook.io/imagecreator.php?hex={hex}&width=100&height=100")
-  color_embed.set_footer(text="color")
+    title, description, url, image_url = news()
+    news_embed = discord.Embed(title="News", color = 0xd0db61)
+    news_embed.add_field(name=title, value=f"""{description}
+
+    Read the article here: {url}
+    """, inline=False)
+
+    news_embed.set_thumbnail(url = image_url)
+    news_embed.set_footer(text="news")
 
 
-  post, image_url, title = meme()
-  meme_embed = discord.Embed(title=title, color = 0xffb448)
-  
-  meme_embed.set_image(url = image_url)
-  meme_embed.set_footer(text=f"meme | {post}")
+    hex = color()
+    color_embed = discord.Embed(title="Random Color", color = 0xffffff)
+    color_embed.add_field(name="Hex Code", value=f"#{hex}", inline=False)
+
+    color_embed.set_image(url = f"https://www.colorbook.io/imagecreator.php?hex={hex}&width=100&height=100")
+    color_embed.set_footer(text="color")
 
 
-  post, title = shower()
-  shower_embed = discord.Embed(title=title, color = 0x9b111e)
-  
-  shower_embed.set_footer(text=f"shower thoughts | {post}")
+    post, image_url, title = meme()
+    meme_embed = discord.Embed(title=title, color = 0xffb448)
 
-  return weather_embed, news_embed, color_embed, meme_embed, shower_embed
+    meme_embed.set_image(url = image_url)
+    meme_embed.set_footer(text=f"meme | {post}")
+
+
+    post, title = shower()
+    shower_embed = discord.Embed(title=title, color = 0x9b111e)
+
+    shower_embed.set_footer(text=f"shower thoughts | {post}")
+
+    return weather_embed, news_embed, color_embed, meme_embed, shower_embed
 
 # @bot.command()
 # async def send():
@@ -149,6 +149,9 @@ Read the article here: {url}
 
 @bot.command()
 async def ping(ctx):
-  await ctx.send("pong")
+    await ctx.send("pong")
 
-bot.run("MTA2MzgxNzE1NDcyNzc5MjY0MA.Gk6RYq.tVrQ5tyDfulfOibkQiKUnReU2HFBq65a5QN2lc")
+with open("", "r") as f:
+    token = json.load(f)['token']
+
+bot.run(token)
