@@ -1,4 +1,3 @@
-import os
 import json
 import discord
 from discord.ext import commands 
@@ -7,7 +6,7 @@ from misc import time_getter as time, news_getter as news, weather_getter as wea
 bot = commands.Bot(command_prefix='.', intents = discord.Intents.all() , help_command = None)
 
 def member_list():
-    guild = bot.get_guild(935545006113058837)
+    guild = bot.get_guild(857595321559416852)
     users = guild.members
     ids = []
 
@@ -39,9 +38,8 @@ async def time_notif():
       with open("users.json", "w") as f:
         json.dump(data, f)
 
-    if h == 8 and m > -1 and m < 1:
-      # await send()
-      print("sent")
+    if h == 16 and m > 53 and m < 55:
+      await send()
 
 
 async def embed_maker():
@@ -92,66 +90,65 @@ async def embed_maker():
 
     return weather_embed, news_embed, color_embed, meme_embed, shower_embed
 
-# @bot.command()
-# async def send():
-#   weather_embed, news_embed, color_embed, meme_embed, shower_embed = await embed_maker()
+TOKEN = "LMAO"
 
-#   with open("users.json", "r") as f:
-#     data = json.load(f)
-#   users = data['users']
+@bot.command()
+async def send():
+    weather_embed, news_embed, color_embed, meme_embed, shower_embed = await embed_maker()
+
+    with open("users.json", "r") as f:
+        data = json.load(f)
+    users = data['users']
   
-#   if data['sent'] == False:
-#     for user in users:
-#       print(user)
-#       discord_user = bot.get_user(user)
-#       try:
-#         await discord_user.send(embed=weather_embed)
-#       except:
-#         pass
-      
-#       try:
-#         await discord_user.send(embed=news_embed)
-#       except:
-#         pass
-      
-#       try:
-#         await discord_user.send(embed=meme_embed)
-#       except:
-#         pass
+    if data['sent'] == False:
+        for user in users:
+            print(user)
+            discord_user = bot.get_user(user)
+            try:
+                await discord_user.send(embed=weather_embed)
+            except:
+                pass
+            
+            try:
+                await discord_user.send(embed=news_embed)
+            except:
+                pass
+            
+            try:
+                await discord_user.send(embed=meme_embed)
+            except:
+                pass
 
-#       try:
-#         await discord_user.send(embed=shower_embed)
-#       except:
-#         pass
+            try:
+                await discord_user.send(embed=shower_embed)
+            except:
+                pass
 
-#       try:
-#         await discord_user.send(embed=color_embed)
-#       except:
-#         pass
+            try:
+                await discord_user.send(embed=color_embed)
+            except:
+                pass
     
-#     channel = bot.get_channel(936450391053307905)
-#     d,m,y = date()
-#     send = ""
-#     for user in users:
-#       user = bot.get_user(user)
-#       user = f"{user.name}#{user.discriminator}"
-#       send = f"""{user}
-# {send}
-# """
-#     embed = discord.Embed(title=f"Log for {d}-{m}-{y}", description=f"user count: {len(users)}\n\nusers:\n\n{send}")
-#     await channel.send(embed=embed)
+    channel = bot.get_channel(936450391053307905)
+    d,m,y = date()
+    send = ""
+    for user in users:
+        user = bot.get_user(user)
+        user = f"{user.name}#{user.discriminator}"
+        send = f"""{user}
+{send}
+"""
+    embed = discord.Embed(title=f"Log for {d}-{m}-{y}", description=f"user count: {len(users)}\n\nusers:\n\n{send}")
+    await channel.send(embed=embed)
       
-#   with open("users.json", "r") as f:
-#     data = json.load(f)
-#   data['sent'] = True
-#   with open("users.json", "w") as f:
-#     json.dump(data, f)
+    with open("users.json", "r") as f:
+        data = json.load(f)
+        data['sent'] = True
+    with open("users.json", "w") as f:
+        json.dump(data, f)
 
 @bot.command()
 async def ping(ctx):
     await ctx.send("pong")
 
-with open("", "r") as f:
-    token = json.load(f)['token']
-
-bot.run(token)
+bot.run(TOKEN)

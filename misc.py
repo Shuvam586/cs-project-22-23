@@ -1,5 +1,6 @@
 import os
 import requests
+import datetime
 
 def date_getter():
     data = requests.get("http://worldtimeapi.org/api/timezone/Asia/Kolkata")
@@ -11,12 +12,9 @@ def date_getter():
 
 
 def time_getter():
-    data = requests.get("http://worldtimeapi.org/api/timezone/Asia/Kolkata")
-    data = data.json()
-    value = data['datetime']
-    not_req , value = value.split("T")
-    value , not_req = value.split(".")
-    h , m , s = value.split(":")
+    x = datetime.datetime.now()
+    h = x.strftime("%H")
+    m = x.strftime("%M")
     return int(h), int(m)
 
 def news_getter():
